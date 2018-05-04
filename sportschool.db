@@ -1,0 +1,168 @@
+-- MySQL dump 10.13  Distrib 5.6.37, for Win32 (AMD64)
+--
+-- Host: localhost    Database: sportschool
+-- ------------------------------------------------------
+-- Server version	5.6.37-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `group`
+--
+
+DROP TABLE IF EXISTS `group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `id_trener` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_group_trener` (`id_trener`),
+  CONSTRAINT `FK_group_trener` FOREIGN KEY (`id_trener`) REFERENCES `trener` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `group`
+--
+
+LOCK TABLES `group` WRITE;
+/*!40000 ALTER TABLE `group` DISABLE KEYS */;
+INSERT INTO `group` VALUES (1,'Спортивная гимнастика (юноши)',1),(2,'Лыжные гонки',2),(3,'Аэробика',3),(4,'Спортивное ориентирование',4),(5,'Дошкольное отделение',5),(6,'Художественная гимнастика',6),(7,'Гребной слалом',7),(8,'Спортивная гимнастика (девушки)',8),(9,'Биатлон',9),(10,'Дошкольное отделение',10);
+/*!40000 ALTER TABLE `group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `login`
+--
+
+DROP TABLE IF EXISTS `login`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(50) NOT NULL,
+  `pass` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `login`
+--
+
+LOCK TABLES `login` WRITE;
+/*!40000 ALTER TABLE `login` DISABLE KEYS */;
+INSERT INTO `login` VALUES (1,'admin','admin');
+/*!40000 ALTER TABLE `login` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sorev`
+--
+
+DROP TABLE IF EXISTS `sorev`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sorev` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `member` int(11) NOT NULL,
+  `place` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_sorev_students` (`member`),
+  CONSTRAINT `FK_sorev_students` FOREIGN KEY (`member`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sorev`
+--
+
+LOCK TABLES `sorev` WRITE;
+/*!40000 ALTER TABLE `sorev` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sorev` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `students`
+--
+
+DROP TABLE IF EXISTS `students`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `id_group` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `year` varchar(50) DEFAULT NULL,
+  `sport_rank` varchar(255) DEFAULT NULL,
+  `honor` int(11) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_students_group` (`id_group`),
+  CONSTRAINT `FK_students_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `students`
+--
+
+LOCK TABLES `students` WRITE;
+/*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES (2,'Андронова Зоя Станиславовна ',9,' ул. Авиаконструктора Микояна, дом 46, квартира 142','20 ноября 2005 года','',NULL,NULL),(3,'Чапко Изольда Максимовна ',8,'ул. Бадюлина, дом 73, квартира 188','7 февраля 1999 года',NULL,NULL,NULL),(5,'Шалдыбин Куприян Анатольевич',1,' ул. Московская, дом 69, квартира 143','22 октября 1974 года','',NULL,NULL),(8,'Журавель Эльвира Алексеевна ',3,'ул. Михаила Агибалова, дом 28, квартира 208','16 августа 1970 года',NULL,NULL,NULL),(9,'Соловьёв Иннокентий Константинович',1,'ул. Бартеневская, дом 42, квартира 41','4 октября 1970 года',NULL,NULL,NULL),(10,'Сергей Минаев',1,'ул. Кирова д.24, кв. 30','25 января 1975 года','',NULL,NULL);
+/*!40000 ALTER TABLE `students` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `trener`
+--
+
+DROP TABLE IF EXISTS `trener`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `trener` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `year` varchar(50) DEFAULT NULL,
+  `zvanie` varchar(255) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `type_sport` varchar(100) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trener`
+--
+
+LOCK TABLES `trener` WRITE;
+/*!40000 ALTER TABLE `trener` DISABLE KEYS */;
+INSERT INTO `trener` VALUES (1,'Соболев Бонифаций Степанович','ул. 15 лет октября, дом 39, квартира 123','27 ноября 1968 года',NULL,'8 (971) 843-63-33','Спортивная гимнастика',NULL),(2,'Рощин Максимильян Филиппович','ул. Авиаконструктора Сухого, дом 21, квартира 283','23 февраля 1977 года',NULL,'8 (913) 685-98-71','Лыжные гонки',NULL),(3,'Сморчкова Екатерина Григорьевна ','ул. Строителей, дом 5, квартира 133','27 сентября 1970 года',NULL,'8 (973) 263-37-66','Аэробика',NULL),(4,'Зеленова Любава Семеновна ','ул. Загородная, дом 58, квартира 246','22 января 1975 года',NULL,'8 (943) 187-37-30','Спортивное ориентировани',NULL),(5,'Шершов Мирон Сергеевич','ул. Завокзальная 1-я, дом 84, квартира 185','4 октября 1982 года',NULL,'8 (959) 868-42-47','Дошкольное отделение',NULL),(6,'Захаров Арно Николаевич','ул. Пушкина, дом 58, квартира 168','19 июня 1992 года',NULL,'8 (958) 794-77-83','Художественная гимнастика',NULL),(7,'Русина Василиса Николаевна ','ул. Вагонников 1-я, дом 59, квартира 47','21 ноября 1974 года',NULL,'8 (942) 833-56-12','Гребной слалом',NULL),(8,'Сергеев Ахмет Валентинович','ул. Гвардейская, дом 17, квартира 201','12 февраля 1995 года',NULL,'8 (946) 918-51-30','Спортивная гимнастика',NULL),(9,'Сморчков Нифонт Андреевич','ул. Сталина, дом 8, квартира 244','16 ноября 1976 года',NULL,'8 (980) 133-40-89','Биатлон',NULL),(10,'Дидиченко Луиза Ярославовна','ул. Барболина, дом 53, квартира 192','24 августа 1972 года',NULL,'8 (963) 807-97-74','Дошкольное отделение',NULL);
+/*!40000 ALTER TABLE `trener` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-01-08  9:13:42
